@@ -1,0 +1,59 @@
+<template>
+  <table>
+    <tr class="line ">
+      <th>Medicines</th>
+      <th colspan="1"></th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+    <tr class="line" v-for="item in cart" :key="item.p_id">
+      <td>
+        <img src="images/product_05.webp" />
+      </td>
+      <td class="desc">{{ item.name }}</td>
+      <td>
+        <span class="quantity">{{ getCartObj[item.p_id] }}</span>
+      </td>
+      <td class="price">
+        {{ item.sp != null ? item.sp : item.mrp }}
+      </td>
+      <td>
+        <a class="btn ion-close-round times"></a>
+      </td>
+    </tr>
+    <tr class="checkout">
+      <td colspan="2"></td>
+      <td class="total">Total</td>
+      <td class="price">
+        Rs.
+        {{ calcTotal }}
+      </td>
+      <td class="checkout">
+        <a class="btn-lg btn-success">Checkout</a>
+      </td>
+    </tr>
+  </table>
+</template>
+
+<script>
+export default {
+  props: ["cart"],
+  computed: {
+    calcTotal() {
+      var total = 0;
+      this.cart.forEach(element => {
+        total +=
+          (element.sp != null ? element.sp : element.mrp) *
+          this.$store.getters.getCartObj[element.p_id];
+      });
+      return total;
+    },
+    getCartObj() {
+      return this.$store.getters.getCartObj;
+    }
+  }
+};
+</script>
+
+<style scoped></style>

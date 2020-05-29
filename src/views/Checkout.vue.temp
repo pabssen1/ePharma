@@ -1,0 +1,212 @@
+<template>
+  <div class="site-section">
+    <div class="container">
+      <div class="card text-black">
+        <div class="card-body background">
+          <div class="cart-card">
+            <Table :cart="getCart"></Table>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="card ng-primary text-white">
+        <div class="card-body ">
+          <div class="w-full mt-4 flex flex-wrap justify-center">
+            <div class="pr-8">
+              <h3 class=" mt-4 font-bold">Thank You, {{ currentUser }}</h3>
+              <h4 class="text-sm text-gray-600 font-bold">ORDER #5624</h4>
+            </div>
+            <img src="images/bus.svg" alt="" class="w-24" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  components: { Table: () => import("@/components/CartTable.vue") },
+  created() {
+    this.$store.dispatch("retrieveUser");
+  },
+  computed: {
+    getCart() {
+      var _c = [];
+      var med = this.$store.getters.getProducts;
+      Object.keys(this.$store.getters.getCartObj).forEach(element => {
+        var result = med.find(({ p_id }) => p_id == element);
+        _c.push(result);
+      });
+      return _c;
+    },
+    currentUser() {
+      if (this.$store.getters.getUser.displayName != null) {
+        return this.$store.getters.getUser.displayName;
+      }
+      return "Guest";
+    }
+  }
+};
+</script>
+
+<style scoped>
+.gradient {
+  background: -webkit-linear-gradient(#4050a4, #9d12df, rgb(182, 15, 15));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+pr-8 {
+  padding-right: 2rem;
+}
+.mt-8 {
+  margin-top: 2rem;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex {
+  display: flex;
+}
+
+.text-purple-900 {
+  color: #ffffff;
+}
+
+blockquote,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+pre {
+  margin: 0;
+}
+.text-sm {
+  font-size: 0.875rem;
+}
+.text-gray-600 {
+  color: #9fafc5;
+}
+.font-bold {
+  font-weight: 700;
+}
+.w-24 {
+  width: 6rem;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e2e8f0;
+}
+.w-full {
+  width: 100%;
+}
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  background-color: rgb(70, 56, 194);
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+img {
+  border-radius: 5px 5px 0 0;
+}
+
+/* checkout */
+table {
+  width: 100%;
+  font-size: 1em;
+}
+
+table th {
+  color: #ffffff;
+  padding-bottom: 20px;
+}
+
+.line {
+  border-bottom: 1px solid #ffffff;
+}
+
+.price {
+  font-weight: 300;
+  font-size: 1em !important;
+  color: #508aa8;
+}
+
+th,
+td {
+  text-align: center;
+}
+th img,
+td img {
+  width: 80px;
+  height: 80px;
+  background: #ffffff;
+  margin: 10px 0px 10px 0px;
+}
+th .desc,
+td .desc {
+  word-break: break-all;
+  font-weight: bold;
+}
+th .icon,
+td .icon {
+  color: #ffffff;
+  background: #ffffff;
+}
+
+.quantity {
+  margin: 0px 10px 0px 10px;
+  font-weight: bold;
+}
+
+.times,
+.total {
+  color: #ffffff;
+}
+
+.checkout {
+  padding: 20px 0px;
+}
+
+#button-container {
+  width: 100%;
+  display: block;
+  position: relative;
+  margin-top: 10px;
+  text-align: center;
+  height: auto;
+}
+</style>
